@@ -6,9 +6,9 @@
 <!-- vim-markdown-toc GitLab -->
 
 - [前言](#前言)
-- [关于 lsp 和 async ](#关于-language-server-protocal-和-async-)
-- [install](#安装)
-- [Work with Linux Kernel](#查看Linux内核)
+- [关于 lsp 和 async ](#----language-server-protocol--https---microsoftgithubio-language-server-protocol-----async))
+- [安装](#install)
+- [Work with Linux Kernel](#Work with Linux Kernel)
 - [基本操作](#基本操作)
     - [search](#search)
     - [file tree](#file-tree)
@@ -112,6 +112,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 整个环境的安装主要是 neovim SpaceVim coc.nvim ccls，下面说明一下安装主要步骤以及其需要注意的一些问题。
 
 1. 推荐使用 [neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)，由于neovim的更新速度更快，新特性支持更好。安装完成之后检查版本，最好大于v0.4.0.
+Ubuntu18.04可以参考[Ubuntu18.04配置SpaceVim](https://blog.csdn.net/cs874300/article/details/108562173?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control)
 ```
 ➜  Vn git:(master) ✗ sudo apt install neovim
 ➜  Vn git:(master) ✗ nvim --version
@@ -140,6 +141,8 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
 ➜  Vn git:(master) ✗ yarn config get registry && npm config get registry
 https://registry.npm.taobao.org
 https://registry.npm.taobao.org/
+
+如果遇到yarn配置报错, 需卸载cmdtest和yarn后通过npm重新安装yarn. sudo npm install -g yarn. 然后重启终端。
 ```
 4. 安装ccls。也可以参考其[官方文档](https://github.com/MaskRay/ccls/wiki/Build)手动编译获取最新版。
 ```
@@ -685,6 +688,7 @@ setxkbmap -option caps:swapescape
 - neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
 - [C/C++ 项目利用 include-what-you-use 来引入头文件](https://github.com/include-what-you-use/include-what-you-use)
 - https://neovim.io/doc/user/vim_diff.html#vim-differences
+- [ubuntu18.04安装vim 8.2](https://www.linuxidc.com/Linux/2020-03/162590.htm)
 
 #### 主题
 1. [dracula](https://draculatheme.com/vim/) 目前感觉最好看的主题之一
