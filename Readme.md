@@ -7,8 +7,7 @@
 
 - [前言](#前言)
 - [效果](#效果)
-- [如何入门](#如何入门)
-- [欢迎来到 Language Server Protocal 和 async 的时代](#欢迎来到-language-server-protocal-和-async-的时代)
+- [关于 Language Server Protocal 和 async ](#关于-language-server-protocal-和-async-)
 - [install](#install)
 - [Work with Linux Kernel](#work-with-linux-kernel)
 - [基本操作](#基本操作)
@@ -30,12 +29,8 @@
     - [基于SpaceVim的扩展 以Latex为例子](#基于spacevim的扩展-以latex为例子)
     - [基于coc.nvim的扩展 以Python为例](#基于cocnvim的扩展-以python为例)
 - [本配置源代码解释](#本配置源代码解释)
-- [TODO](#todo)
 - [其他的一些资源](#其他的一些资源)
-    - [学习](#学习)
-    - [主题](#主题)
-    - [框架](#框架)
-    - [衍生](#衍生)
+
 
 <!-- vim-markdown-toc -->
 </details>
