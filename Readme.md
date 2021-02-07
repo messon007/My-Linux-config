@@ -132,7 +132,7 @@ Run :checkhealth for more info
 
 2. 按照Spacevim 安装的[官方文档](https://spacevim.org/cn/quick-start-guide/)安装SpaceVim。只为neovim安装Spacevim用:
 ```
-curl -sLf https://spacevim.org/cn/install.sh | bash -s -- --install neovim
+curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
 ```
 
 3. 安装npm和yarn, **保证yarn/npm使用国内镜像, 部分插件需要使用yarn/npm安装, 如果不切换为国内镜像, ***很容易***出现安装失败.**，切换方法参考[这里](https://zhuanlan.zhihu.com/p/35856841). 安装完成之后检查:
@@ -279,7 +279,6 @@ init.toml
 [[custom_plugins]]
     name = 'jackguo380/vim-lsp-cxx-highlight'
 
-
 # 主要用于快速搜索 文件, buffer 和 函数
 [[custom_plugins]]
     name = "Yggdroot/LeaderF"
@@ -302,6 +301,7 @@ endfunction
 
 function! myspacevim#after() abort
     let g:neomake_cpp_clang_maker = { 'exe': 'g++' }
+    let g:neomake_cpp_clang_args = ["-std=c++11", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
     let g:neomake_cpp_enabled_makers = ["cpplint"]
     let g:neomake_cpp_cpplint_maker = { 'args': '' }
 endfunction
@@ -323,9 +323,6 @@ set nowritebackup
 
 " 使用 Microsoft Python Language Server 不然 coc.nvim 会警告
 call coc#config("python.jediEnabled", v:false)
-
-call coc#config("smartf.wordJump", v:false)
-call coc#config("smartf.jumpOnTrigger", v:false)
 
 call coc#config('coc.preferences', {
                         \ "autoTrigger": "always",
@@ -360,9 +357,6 @@ call coc#config("languageserver", {
       \  "ignoredRootPaths": ["~"]
       \},
       \})
-
-call coc#config("git.addGBlameToVirtualText", v:true)
-call coc#config("git.virtualTextPrefix", "👋 ")
 
 " coc.nvim 插件，用于支持 python 等语言
 let s:coc_extensions = [
@@ -690,11 +684,10 @@ setxkbmap -option caps:swapescape
 ## 其他的一些资源
 - neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
 - [C/C++ 项目利用 include-what-you-use 来引入头文件](https://github.com/include-what-you-use/include-what-you-use)
-
+- https://neovim.io/doc/user/vim_diff.html#vim-differences
 
 #### 主题
 1. [dracula](https://draculatheme.com/vim/) 目前感觉最好看的主题之一
-2. [vimcolors](http://vimcolors.com/) vim主题网站
 
 #### 框架
 1. [exvim](https://exvim.github.io/)
