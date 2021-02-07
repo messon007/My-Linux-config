@@ -6,7 +6,7 @@
 <!-- vim-markdown-toc GitLab -->
 
 - [前言](#前言)
-- [关于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 和 async ](#关于-language-server-protocal-和-async-)
+- [关于 lsp 和 async ](#关于-language-server-protocal-和-async-)
 - [install](#安装)
 - [Work with Linux Kernel](#查看Linux内核)
 - [基本操作](#基本操作)
@@ -245,7 +245,6 @@ spacevim 配置提供了强大的[异步搜索功能](https://spacevim.org/grep-
     call SpaceVim#custom#SPC('nnoremap', ['s', 'F'], 'LeaderfFunction!', 'search symbol with LeaderF', 1)
 ```
 其实它们的功能不限于搜索函数，比如搜索 markdown 的标题
-![搜索markdown标题](https://upload-images.jianshu.io/upload_images/9176874-44f63af5e63d30d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### define reference
 这些功能都是lsp提供的，详细的配置在 plugin/coc.vim 中间，此处列举常用的。
