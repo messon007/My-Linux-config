@@ -200,7 +200,8 @@ init.toml
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
     enable_neomake = false
-        # disable built-in plugin
+    
+    # disable built-in plugin
     # disabled_plugins = ["neomake.vim"]
 
 # Enable autocomplete layer
@@ -225,7 +226,8 @@ init.toml
 [[layers]]
     name = "core#banner"
     enable = false
-    [[layers]]
+   
+[[layers]]
     name = "core#tabline"
 
 [[layers]]
@@ -255,7 +257,7 @@ init.toml
   ]
   [layers.override_cmd]
       c = ['ccls', '--log-file=/tmp/ccls.log']
-    cpp = ['ccls', '--log-file=/tmp/ccls.log']
+      cpp = ['ccls', '--log-file=/tmp/ccls.log']
 
 [[layers]]
     name = "format"
@@ -272,7 +274,8 @@ init.toml
     name = "gtags"
     gtagslabel = "pygments"
     enable = false
-    # 基于lsp的高亮插件
+
+# 基于lsp的高亮插件
 [[custom_plugins]]
     name = 'jackguo380/vim-lsp-cxx-highlight'
 
@@ -306,27 +309,113 @@ endfunction
 
 Here is my configuration in SpaceVim.d/plugin/coc.vim
 
-```inoremap <silent><expr> <c-space> coc#refresh()
+```
+" coc.nvim 的配置, 来自于 https://github.com/neoclide/coc.nvim
+
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" 使用 Microsoft Python Language Server 不然 coc.nvim 会警告
+call coc#config("python.jediEnabled", v:false)
+
+call coc#config("smartf.wordJump", v:false)
+call coc#config("smartf.jumpOnTrigger", v:false)
 
 call coc#config('coc.preferences', {
-			\ "autoTrigger": "always",
-			\ "maxCompleteItemCount": 10,
-			\ "codeLens.enable": 1,
-			\ "diagnostic.virtualText": 1,
-			\})
+                        \ "autoTrigger": "always",
+                        \ "maxCompleteItemCount": 10,
+                        \ "codeLens.enable": 1,
+                        \ "diagnostic.virtualText": 1,
+                        \})
 
+" c/c++ golang 和 bash 的 language server 设置
+call coc#config("languageserver", {
+      \"ccls": {
+      \  "command": "ccls",
+      \  "filetypes": ["c", "cpp"],
+      \  "rootPatterns": ["compile_commands.json", ".svn/", ".git/"],
+      \  "index": {
+      \     "threads": 8
+      \  },
+      \  "initializationOptions": {
+      \     "cache": {
+      \       "directory": ".ccls-cache"
+      \     },
+      \     "highlight": { "lsRanges" : v:true }
+      \   },
+      \  "client": {
+      \    "snippetSupport": v:false
+      \   }
+      \},
+      \"bash": {
+      \  "command": "bash-language-server",
+      \  "args": ["start"],
+      \  "filetypes": ["sh"],
+      \  "ignoredRootPaths": ["~"]
+      \},
+      \})
+
+call coc#config("git.addGBlameToVirtualText", v:true)
+call coc#config("git.virtualTextPrefix", "👋 ")
+
+" coc.nvim 插件，用于支持 python 等语言
 let s:coc_extensions = [
-			\ 'coc-dictionary',
-			\ 'coc-json',
-			\ 'coc-ultisnips',
-			\ 'coc-tag',
-			\]
-
+      \ 'coc-python',
+      \ 'coc-dictionary',
+      \ 'coc-tag',
+      \ 'coc-json',
+      \ 'coc-yaml',
+      \ 'coc-cmake',
+      \ 'coc-lists',
+                        \]
 for extension in s:coc_extensions
-	call coc#add_extension(extension)
+        call coc#add_extension(extension)
 endfor
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references-used)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Remap for rename current word and it doesn't work
+" nmap <leader>rn <Plug>(coc-rename)
+
+" 注释掉，一般使用 `Space` `r` `f` 直接格式化整个文件
+" Remap for format selected region
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 ```
+
 6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。
+安装的插件目录应该在.cache/vimfiles/repos/github.com/底下. 
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
 ```
@@ -361,9 +450,9 @@ nvim
 默认为vim兼容模式，详细的操作请移步到SpaceVim, coc.nvim, ccls 以及特定插件的文档。
 
 注意: vim 默认的 leader 键，加上前面提到的两个特殊功能leader, 一共存在三个 leader 键，其功能总结如下:
-| `,`                         | `c`      |
-|-----------------------------|----------|
-| 通用leader 键，包含各种作用 | 窗口操作 |
+| `,`                         | `c`      | `Space`  |
+|-----------------------------|----------|----------|
+| 通用leader 键，包含各种作用 | 窗口操作 | SpaceVim使用|
 这三个键位都是可以重新映射的。
 
 #### search
