@@ -6,10 +6,9 @@
 <!-- vim-markdown-toc GitLab -->
 
 - [前言](#前言)
-- [效果](#效果)
-- [关于 Language Server Protocal 和 async ](#关于-language-server-protocal-和-async-)
-- [install](#install)
-- [Work with Linux Kernel](#work-with-linux-kernel)
+- [关于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 和 async ](#关于-language-server-protocal-和-async-)
+- [install](#安装)
+- [Work with Linux Kernel](#查看Linux内核)
 - [基本操作](#基本操作)
     - [search](#search)
     - [file tree](#file-tree)
@@ -41,10 +40,7 @@
 
 我平时主要C/C++，处理的工程小的有 : 刷Leetcode(几十行)，中型的有 : ucore 试验(上万行)，linux kernel(千万行)，用目前的配置都是丝般顺滑。当然，得益于coc.nvim的强大，本配置也可以较好的处理Python，Java，Rust等语言。
 
-本文使用neovim + [SpaceVim](http://spacevim.org/) + [coc.nim](https://github.com/neoclide/coc.nvim)来搭建c/c++开发环境。SpaceVim的默认提供各种基础设施的解决方案，比如status line，搜索，markdown预览高亮，其也虽然提供了 [C/C++ 的配置](https://spacevim.org/layers/lang/c/)，但是我个人觉得并不好用，而coc.nvim吸收了VSCode的优点(允许安装类似VSCode插件的coc插件)。
-
-## 效果
-![总体效果](https://upload-images.jianshu.io/upload_images/9176874-e3b90299db81d2bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+本文使用neovim + [SpaceVim](http://spacevim.org/) + [coc.nim](https://github.com/neoclide/coc.nvim)来搭建c/c++开发环境。SpaceVim的默认提供各种基础设施的解决方案，比如status line，搜索，markdown预览高亮，其也虽然提供了 [C/C++ 的配置](https://spacevim.org/layers/lang/c/)，但是我个人觉得并不好用，而coc.nvim吸收了VSCode的优点(允许安装VSCode插件的coc插件版本)。
 
 ## 关于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 和 async 
 ### lsp是什么
@@ -65,48 +61,46 @@ lsp 定义了一套标准编辑器和 language server 之间的规范。不同�
  +------------------------+    +---------------------------+    +-----------------------+
 ```
 ### lsp的作用：
-* 让静态检查变得异常简单，当不小心删除掉一个`put_swap_page`这个函数字符之后，立刻得到如下的效果:
-![静态检查](https://upload-images.jianshu.io/upload_images/9176874-961f534527ce3236.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+* 让静态检查变得异常简单，当不小心删除掉一个`put_swap_page`这个函数字符之后，立刻得到提示。
 
-* 基于lsp的高亮，函数，变量，宏，关键字都是有自己的颜色，但是基本的高亮就只有关键字显示有所不同。你可以对别上下两张图，上图是基于语义的高亮，类型 `swp_entry_t`, 宏 `xa_lock_irq`, 成员 `i_pages` 等都是使用特定的颜色，而下图中只要 `void` `struct` 显示了高亮。
-![不是基于语义的高亮](https://upload-images.jianshu.io/upload_images/9176874-02a2e65b22a29ff2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+* 基于lsp的高亮，函数，变量，宏，关键字都是有自己的颜色，但是基本的高亮就只有关键字进行了高亮。lsp是基于语义的高亮，类型 `swp_entry_t`, 宏 `xa_lock_irq`, 成员 `i_pages` 等都是使用特定的颜色，而基本高亮只有 `void` `struct` 显示了高亮。
 
-当使用上了lsp之后，之前写C/C++P必备的[YCM](https://github.com/ycm-core/YouCompleteMe)(用于自动补全，静态检查等)和[ctags](https://github.com/universal-ctags/ctags)(用于符号跳转)终于可以离开了。YCM对于小的项目还是工作的不错的，但是大型项目显得笨重，毕竟 YCM 不仅支持 C 语言，支持 Java, Rust, Go 等等，而且其不会生成索引，也就是每次打开大型项目都可以听见电脑疯转一会儿。此外，YCM 的安装总是需要手动安装。ctags 似乎不是基于语义的索引，而是基于字符串匹配实现，所以会出现误判，比如两个文件中间都定义了 static 的同名函数，ctags 往往会将两者都找出来。ctags 是无法查找函数的引用的，只能查找定义。当我知道 ctags 可以同时支持几十种语言的时候，ctags 存在这些问题，我就再也不感到奇怪了。gtags 解决了 ctags 查找引用的问题，其同样支持大量的语言，但是跳转精度，索引自动生成等根本问题没有被解决。与之相对的是，一个lsp一般只支持其对应的一门语言。
+* 自动完成，这是其最重要的功能。
 
-到此，曾经为了在 vim 中间书写 C/C++，你需要安装 ctags 生成索引，需要安装 ctags 的 vim 插件在 vim 中间使用 ctags，自动更新索引数据库的插件，YCM 实现静态检查，最最让人崩溃的是，那一天你忽然想使用vim写一个新的语言，比如 Java，类似的操作你又需要重新走一遍，而且还要手动映射快捷键，来保证这些快捷键不会互相冲突。你还会发现 ctags 存在好几个版本，安装不对，对应的插件也没有办法正常工作。
+当使用上了lsp之后，之前写C/C++P必备的[YCM](https://github.com/ycm-core/YouCompleteMe)(用于自动补全，静态检查等)和[ctags](https://github.com/universal-ctags/ctags)就不需要了。YCM对于大型项目显得笨拙，ctags 不是基于语义的索引，而是基于字符串匹配实现，所以会出现误判，比如两个文件中间都定义了 static 的同名函数，ctags 往往会将两者都找出来。gtags 解决了 ctags 查找引用的问题，其同样支持大量的语言，但是跳转精度，索引自动生成等根本问题没有被解决。
 
 利用 coc.nvim 可以获取极佳的 lsp 体验 ，因为 lsp 是微软开发 vscode 提出的，coc.nvim 的宗旨就是*full language server protocol support as VSCode*。
 
 ### async
 另一个新特性是 **async** (异步机制)。async 的特点就是快，当一个插件存在其async的版本，那么毫无疑问，使用async版本。[nerdtree](https://github.com/preservim/nerdtree) 使用vim的人应该是无人不知，我之前一直都是使用这一个插件的，直到有一天我用vim打开linux kernel，并且打开nerdtree之后，光标移动都非常的困难，我开始以为是终端的性能问题，后来以为是lsp的问题，直到将nerdtree替换为[大神shougou的defx](https://github.com/Shougo/defx.nvim)。我想，如果没有 SpaceVim，我永远都不要找到 defx 这一个插件。
 
-VSCode 我也使用过一段时间，我觉得VSCode 之所以学习曲线非常的平缓主要有两个原因，一是其提供标准配置给新手就可以直接使用了，但是vim没有一个较好的配置，几乎没有办法使用。二是，官方提供了统一的插件市场，好的插件自动排序，再也不需要像vim这里，找到好的插件需要耐心和运气。 vimawesome 在一定程度上解决了这个问题，但是它把 YCM 排在[autocomplete](https://vimawesome.com/?q=autocomplete) 搜索的第一名，我非常的不认可。目前，SpaceVim 比较好的解决了这个问题，利用社区的力量，SpaceVim 对于各种问题，挑选了对应的优质插件，基本可以实现开箱即用。
-
-如果一个项目好几年都没有更新过，比如 [use_vim_as_ide](https://github.com/yangyangwithgnu/use_vim_as_ide)，那么基本没有阅读的价值了，因为vim社区日新月异，不进则退。
-
 ### 支持lsp的开源项目
 在2019.7.24，linux 内核的.gitignore增加了对于lsp的支持。
 ![内核的gitignore](https://upload-images.jianshu.io/upload_images/9176874-8d57913135875846.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+## 关于Neovim
+Neovim is a Vim-based text editor engineered for extensibility and usability. 
+Neovim is a refactor, and sometimes redactor, in the tradition of Vim (which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim. Many clones and derivatives exist, some very clever—but none are Vim. Neovim is built for users who want the good parts of Vim, and more.
+
+## 关于SpaceVim
+SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织管理插件以及相关配置， 为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全， 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱即用的 Vim IDE。SpaceVim 挑选了优质插件，基本可以实现开箱即用。另外vimawesome也是一个vim插件市场, 可能不如SpaceVim好用。
 
 ## install
-安装可以参考 install 目录下的的脚本(有待完善和测试)，下面是详细的解释。安装成功需要注意两点:
-1. 代理 : 尽管 python, pacman/apt-get/yum，npm, docker 都是可以使用国内镜像，但是部分还是需要国外的，比如 Microsoft Python Language Server. 实现代理的方法在 github 上有很多教程，也可以参考[我的 blog](https://martins3.github.io/gfw.html)
-2. 软件版本 : 在 Ubuntu 16.04 上安装简直是一个噩梦，很多软件需要手动编译，不过在 Ubuntu 20.04 上问题不大，下面以 20.04 作为例子，其他的 distribution 例如 Arch Linux, Manjaro 应该类似。
-
-本配置的架构如下图所示。
+安装说明：
+1. 代理: 尽管 python, pacman/apt-get/yum，npm, docker 都是可以使用国内镜像，但是部分还是需要国外的，比如 Microsoft Python Language Server. 实现代理的方法在 github 上有很多教程，也可以参考[我的 blog](https://martins3.github.io/gfw.html)
+2. 本配置的架构如下图所示。
 ```
 +-----------------+
 |                 |
-|     my config   | 在 SpaceVim 的基础上整合coc.nvim，同时添加一些插件和配置
+|     my config   | 定制Neovim, SpaceVim和coc.nvim的配置，添加coc.nvim的插件
 |                 |
 +-----------------+
 |                 |
-|     Coc.nvim    | 提供lsp功能，完美吸收VSCode的优雅体验，完美支持C/C++。
-|                 | coc.nvim 同样可以添加插件，比如 coc-clang。
+|     Coc.nvim    | 作为SpaceVim的插件，在SpaceVim的autocomplet_method为coc时会要求启用lsp层，此时coc作为language-server的前端。
+|                 | coc.nvim同样可以添加插件，比如 coc-clang。
 +-----------------+
 |                 |
-|     SpaceVim    | 一个模块化，功能齐全的vim distribution。
+|     SpaceVim    | 一个基于neovim的vim ide, 其支持模块化(每个模块包装了多个vim插件)的插件管理方法, 以layer层级来管理模块。也支持客户定制的插件。
 |                 |
 +-----------------+
 |                 |
@@ -114,7 +108,7 @@ VSCode 我也使用过一段时间，我觉得VSCode 之所以学习曲线非常
 |                 |
 +-----------------+
 ```
-整个环境的安装主要是 neovim SpaceVim coc.nvim ccls，下面说明一下安装主要步骤以及其需要注意的一些小问题。
+整个环境的安装主要是 neovim SpaceVim coc.nvim ccls，下面说明一下安装主要步骤以及其需要注意的一些问题。
 
 1. 推荐使用 [neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)，由于neovim的更新速度更快，新特性支持更好。安装完成之后检查版本，最好大于v0.4.0.
 ```
@@ -148,27 +142,14 @@ https://registry.npm.taobao.org/
 ccls version 0.20190823.6-1~ubuntu1.20.04.1
 clang version 10.0.0-4ubuntu1
 ```
-5. 下载本配置, 在此基础上定制自己的配置
+5. 下载本配置, 在此基础上定制自己的配置。会使能coc和lsp.
 ```sh
 cd ~ # 保证在根目录
 rm -r .SpaceVim.d # 将原来的配置删除
 git clone https://github.com/martins3/My-Linux-config .SpaceVim.d 
 nvim # 打开vim 将会自动安装所有的插件
 ```
-6. 在nvim中间执行 `checkhealth` 命令，其会提醒需要安装的各种依赖, 比如 xclip 没有安装，那么和系统的clipboard和vim的clipboard之间复制会出现问题。neovim 的 python 的没有安装可能导致直接不可用。
-```
-sudo apt install xclip
-# archlinux 请使用 wl-clipboard 替代xclip
-# sudo pacman -S wl-clipboard
-sudo pip3 install neovim
-```
-注: 感谢 [@Limaomao821](https://github.com/Martins3/My-Linux-config/issues/10) 指出，其中 Python2 和 Ruby 的依赖是不需要安装。
-以及 [@Korov](https://github.com/Martins3/My-Linux-config/issues/11) 指出 archlinux 的剪切板使用 wl-clipboard
-
-
-例如下面是我的配置的截图。
-![checkhealth screenshot](https://upload-images.jianshu.io/upload_images/9176874-690ec7a23ba8826e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
 ```
@@ -310,7 +291,6 @@ endsnippet
 这样，然后每次只需要输入 import 这些内容就自动出现了，效果如下。
 ![此时只需要按下Enter，这些内容就会自动出现](https://upload-images.jianshu.io/upload_images/9176874-50be9343756e731f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
 一般的自动补全, coc.nvim 无需另外的配置，效果如下。
 ![自动补全](https://upload-images.jianshu.io/upload_images/9176874-daac0f5b05792dba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -376,7 +356,7 @@ https://zhuanlan.zhihu.com/p/137840336 : 配置代码风格为 Google 风格
 
 - 原理
 
-SpaceVim 的强大之处是将众多插件融合在一起，当在使用 latex layer，那么 spacevim 会自动让包管理器安装 [vimtex](https://github.com/lervag/vimtex)，并且重新映射快捷键。
+SpaceVim 的强大之处是将众多插件融合在一起，当使能 latex layer，那么 spacevim 会自动让包管理器安装 [vimtex](https://github.com/lervag/vimtex)，并且重新映射快捷键。
 看一下其[文档](https://spacevim.org/layers/lang/latex/)和[源码](https://github.com/SpaceVim/SpaceVim/blob/master/autoload/SpaceVim/layers/lang/latex.vim)就非常清楚了。
 
 - 说明
@@ -410,12 +390,12 @@ call coc#config("python.jediEnabled", v:false)
 s:coc_extensions 添加 coc-python 之后，会自动安装[coc-python](https://github.com/neoclide/coc-python)和[language server](https://github.com/microsoft/python-language-server)。
 通过coc.nvim，nvim 可以将自己伪装成为 vscode，coc-python 本身也是 vscode 的插件。如此，vscode 的处理 python 的技术被吸收到 vim 中来。
 
-## [本配置](https://github.com/Martins3/My-Linux-config)源代码解释
+## [本配置]解释
 SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码往往是更加好的方法，比如如果想知道 defx 的使用方法，进入到 ~/.SpaceVim/ 中，找到 defx.vim 直接阅读代码即可。
 
 本配置的主要组成:
-1. init.toml : 最基本的配置，在此处可以自己添加新的插件
-2. autoload/myspacevim.vim : 一些插件的配置，一些快捷键
+1. init.toml : 最基本的配置，在此处可以自己添加新的插件, SpaceVim加载后会加载此配置。不支持vim script.
+2. autoload/myspacevim.vim : 一些插件的配置和快捷键, 支持vim script. 实现在init.toml中定义的bootstrap_before和bootstrap_after函数。
 3. plugin/coc.vim : coc.nvim 和 ccls 的配置，几乎是[coc.nvim 标准配置](https://github.com/neoclide/coc.nvim#example-vim-configuration) 和 [ccls 提供给coc.nvim 的标准配置](https://github.com/MaskRay/ccls/wiki/coc.nvim) 的复制粘贴。
 4. plugin/defx.vim : 添加了一条让 defx 忽略各种二进制以及其他日常工作中间不关心的文件。
 
