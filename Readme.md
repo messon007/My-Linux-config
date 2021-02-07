@@ -81,6 +81,7 @@ lsp 定义了一套标准编辑器和 language server 之间的规范。不同�
 ## 关于Neovim
 Neovim is a Vim-based text editor engineered for extensibility and usability. 
 Neovim is a refactor, and sometimes redactor, in the tradition of Vim (which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim. Many clones and derivatives exist, some very clever—but none are Vim. Neovim is built for users who want the good parts of Vim, and more.
+其配置文件为.config/nvim
 
 ## 关于SpaceVim
 SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织管理插件以及相关配置， 为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全， 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱即用的 Vim IDE。SpaceVim 挑选了优质插件，基本可以实现开箱即用。另外vimawesome也是一个vim插件市场, 可能不如SpaceVim好用。
@@ -92,20 +93,20 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 ```
 +-----------------+
 |                 |
-|     my config   | 定制Neovim, SpaceVim和coc.nvim的配置，添加coc.nvim的插件
+|     my config   | 定制Neovim, SpaceVim和coc.nvim的配置，添加coc.nvim的插件; init.toml, plugin/coc.vim, plugin/defx.vim和autoload/myspacevim.vim
 |                 |
 +-----------------+
 |                 |
 |     Coc.nvim    | 作为SpaceVim的插件，在SpaceVim的autocomplet_method为coc时会要求启用lsp层，此时coc作为language-server的前端。
-|                 | coc.nvim同样可以添加插件，比如 coc-clang。
+|                 | coc.nvim同样可以添加插件，比如 coc-clang。其插件等会被自动安装在.config/coc/extensions
 +-----------------+
+|                 | 基于neovim的vim ide, 支持模块化(每个模块包装了多个vim插件)的插件管理方法, 以layer层级来管理模块。也支持客户定制的插件。
+|     SpaceVim    | 其配置文件为: .SpaceVim (将~/.config/nvim软链接到~/.SpaceVim) 
+|                 | 其允许再次定制，目录为.SpaceVim.d/; 包含init.toml, plugin/coc.vim, plugin/defx.vim和autoload/myspacevim.vim
++-----------------+ 
 |                 |
-|     SpaceVim    | 一个基于neovim的vim ide, 其支持模块化(每个模块包装了多个vim插件)的插件管理方法, 以layer层级来管理模块。也支持客户定制的插件。
-|                 |
-+-----------------+
-|                 |
-|     Neovim      | 编辑器，当没有任何配置的时候，比较难用。
-|                 |
+|     Neovim      | 编辑器而已. 其配置文件为: ~/.config/nvim/init.vim; windows下为~/AppData/Local/nvim/init.vim
+|                 | 安装后在目录/usr/share/nvim/runtime/能查到其内置的插件.
 +-----------------+
 ```
 整个环境的安装主要是 neovim SpaceVim coc.nvim ccls，下面说明一下安装主要步骤以及其需要注意的一些问题。
@@ -128,7 +129,12 @@ See ":help feature-compile"
 
 Run :checkhealth for more info
 ```
-2. 按照Spacevim 安装的[官方文档](https://spacevim.org/cn/quick-start-guide/)安装SpaceVim。
+
+2. 按照Spacevim 安装的[官方文档](https://spacevim.org/cn/quick-start-guide/)安装SpaceVim。只为neovim安装Spacevim用:
+```
+curl -sLf https://spacevim.org/cn/install.sh | bash -s -- --install neovim
+```
+
 3. 安装npm和yarn, **保证yarn/npm使用国内镜像, 部分插件需要使用yarn/npm安装, 如果不切换为国内镜像, ***很容易***出现安装失败.**，切换方法参考[这里](https://zhuanlan.zhihu.com/p/35856841). 安装完成之后检查:
 ```
 ➜  Vn git:(master) ✗ yarn config get registry && npm config get registry
@@ -142,13 +148,14 @@ https://registry.npm.taobao.org/
 ccls version 0.20190823.6-1~ubuntu1.20.04.1
 clang version 10.0.0-4ubuntu1
 ```
-5. 下载本配置, 在此基础上定制自己的配置。会使能coc和lsp.
+5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.
 ```sh
 cd ~ # 保证在根目录
 rm -r .SpaceVim.d # 将原来的配置删除
 git clone https://github.com/martins3/My-Linux-config .SpaceVim.d 
 nvim # 打开vim 将会自动安装所有的插件
 ```
+init.toml
 ```
 # All SpaceVim option below [option] section
 [options]
@@ -275,6 +282,28 @@ nvim # 打开vim 将会自动安装所有的插件
     name = "Yggdroot/LeaderF"
     build = "./install.sh"
 ```
+Here is my configuration in SpaceVim.d/autoload/myspacevim.vim
+```
+function! myspacevim#before() abort
+    let g:neoformat_cpp_clangformat = { 'exe': "clang-format", 'args': ['--style=Google'] }
+    let g:neoformat_enabled_cpp = ['clangformat']
+    let g:spacevim_default_indent          = 4
+    let g:spacevim_enable_cursorline       = 1
+
+    " 重新映射 leader 键
+    let g:mapleader = ','
+
+    " vim-lsp-cxx-highlight 和这个选项存在冲突
+    " let g:rainbow_active = 1
+endfunction
+
+function! myspacevim#after() abort
+    let g:neomake_cpp_clang_maker = { 'exe': 'g++' }
+    let g:neomake_cpp_enabled_makers = ["cpplint"]
+    let g:neomake_cpp_cpplint_maker = { 'args': '' }
+endfunction
+```
+
 Here is my configuration in SpaceVim.d/plugin/coc.vim
 
 ```inoremap <silent><expr> <c-space> coc#refresh()
