@@ -46,7 +46,7 @@ call coc#config("languageserver", {
       \},
       \})
 
-" coc.nvim 插件，用于支持 python java 等语言
+" coc.nvim 插件，用于支持 python  等语言
 let s:coc_extensions = [
       \ 'coc-python',
       \ 'coc-dictionary',
@@ -59,11 +59,6 @@ let s:coc_extensions = [
 for extension in s:coc_extensions
         call coc#add_extension(extension)
 endfor
-
-
-" 方便在中文中间使用 w 和 b 移动
-nmap <silent> w <Plug>(coc-ci-w)
-nmap <silent> b <Plug>(coc-ci-b)
 
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
@@ -87,17 +82,13 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
 " 注释掉，一般使用 `Space` `r` `f` 直接格式化整个文件
 " Remap for format selected region
 " vmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
 
 " Use `:Format` for format current buffer
-" command! -nargs=0 Format :call CocAction('format')
-call SpaceVim#custom#SPC('nnoremap', ['r', 'f'], "call CocAction('format')", 'format file with coc.nvim', 1)
+command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
