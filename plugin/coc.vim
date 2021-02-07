@@ -12,9 +12,6 @@ set nowritebackup
 " 使用 Microsoft Python Language Server 不然 coc.nvim 会警告
 call coc#config("python.jediEnabled", v:false)
 
-call coc#config("smartf.wordJump", v:false)
-call coc#config("smartf.jumpOnTrigger", v:false)
-
 call coc#config('coc.preferences', {
                         \ "autoTrigger": "always",
                         \ "maxCompleteItemCount": 10,
@@ -49,12 +46,13 @@ call coc#config("languageserver", {
       \},
       \})
 
-call coc#config("git.addGBlameToVirtualText", v:true)
-call coc#config("git.virtualTextPrefix", "👋 ")
-
 " coc.nvim 插件，用于支持 python java 等语言
 let s:coc_extensions = [
       \ 'coc-python',
+      \ 'coc-dictionary',
+      \ 'coc-tag',
+      \ 'coc-json',
+      \ 'coc-yaml',
       \ 'coc-cmake',
       \ 'coc-lists',
                         \]
@@ -62,16 +60,6 @@ for extension in s:coc_extensions
         call coc#add_extension(extension)
 endfor
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 " 方便在中文中间使用 w 和 b 移动
 nmap <silent> w <Plug>(coc-ci-w)
@@ -99,11 +87,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-set updatetime=300
-autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd CursorHoldI * sil call CocActionAsync('showSignatureHelp')
-
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -111,14 +94,6 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 " vmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
 
 " Use `:Format` for format current buffer
 " command! -nargs=0 Format :call CocAction('format')
