@@ -6,7 +6,7 @@
 <!-- vim-markdown-toc GitLab -->
 
 - [前言](#前言)
-- [关于 lsp 和 async ](#----language-server-protocol--https---microsoftgithubio-language-server-protocol-----async))
+- [关于 lsp 和 async ](#----language-server-protocol--https---microsoftgithubio-language-server-protocol-----async)
 - [安装](#install)
 - [Work with Linux Kernel](#Work with Linux Kernel)
 - [基本操作](#基本操作)
