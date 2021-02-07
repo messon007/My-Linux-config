@@ -275,6 +275,28 @@ nvim # 打开vim 将会自动安装所有的插件
     name = "Yggdroot/LeaderF"
     build = "./install.sh"
 ```
+Here is my configuration in SpaceVim.d/plugin/coc.vim
+
+```inoremap <silent><expr> <c-space> coc#refresh()
+
+call coc#config('coc.preferences', {
+			\ "autoTrigger": "always",
+			\ "maxCompleteItemCount": 10,
+			\ "codeLens.enable": 1,
+			\ "diagnostic.virtualText": 1,
+			\})
+
+let s:coc_extensions = [
+			\ 'coc-dictionary',
+			\ 'coc-json',
+			\ 'coc-ultisnips',
+			\ 'coc-tag',
+			\]
+
+for extension in s:coc_extensions
+	call coc#add_extension(extension)
+endfor
+```
 6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
