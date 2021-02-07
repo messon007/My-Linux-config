@@ -130,7 +130,10 @@ See ":help feature-compile"
 
 Run :checkhealth for more info
 ```
-
+根据情况可能需要运行如下命令:
+```
+npm -g install neovim
+```
 2. 按照Spacevim 安装的[官方文档](https://spacevim.org/cn/quick-start-guide/)安装SpaceVim。只为neovim安装Spacevim用:
 ```
 curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
@@ -151,7 +154,7 @@ https://registry.npm.taobao.org/
 ccls version 0.20190823.6-1~ubuntu1.20.04.1
 clang version 10.0.0-4ubuntu1
 ```
-5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.
+5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.注意coc.nvim对nodej有版本要求, 需参考coc.nvim的github页来确认。
 ```sh
 cd ~ # 保证在根目录
 rm -r .SpaceVim.d # 将原来的配置删除
@@ -476,6 +479,7 @@ spacevim 配置提供了强大的[异步搜索功能](https://spacevim.org/grep-
 | `k`             | 向上移动                                          |
 
 更多配置可直接阅读SpaceVim里defx插件的源码, 位置在 : `~/.SpaceVim/config/plugins/defx.vim`
+如果报错, 可能需要执行pip3 install pynvim.
 
 #### window
 1. `<Tab>` : 进入下一个窗口
