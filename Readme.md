@@ -149,6 +149,132 @@ rm -r .SpaceVim.d # 将原来的配置删除
 git clone https://github.com/martins3/My-Linux-config .SpaceVim.d 
 nvim # 打开vim 将会自动安装所有的插件
 ```
+```
+# All SpaceVim option below [option] section
+[options]
+    # set spacevim theme. by default colorscheme layer is not loaded,
+    # if you want to use more colorscheme, please load the colorscheme
+    # layer
+    colorscheme = "gruvbox"
+    colorscheme_bg = "dark"
+    # Disable guicolors in basic mode, many terminal do not support 24bit
+    # true colors
+    enable_guicolors = false
+    # Disable statusline separator, if you want to use other value, please
+    # install nerd fonts
+    statusline_separator = "nil"
+    statusline_iseparator = "nil"
+    buffer_index_type = 4
+    windows_index_type = 3
+
+    enable_tabline_filetype_icon = false
+    enable_statusline_mode = false
+    statusline_unicode_symbols = false
+    # left sections of statusline
+    statusline_left_sections = [
+        'winnr',
+	    ]
+    # right sections of statusline
+    statusline_right_sections = [
+       'percentage'
+    ]
+
+    # Enable vim compatible mode, avoid changing origin vim key bindings
+    vimcompatible = true
+    default_indent = 4
+    enable_cursorline = 0
+
+    # customize option
+    snippet_engine = "ultisnips"
+    filemanager = "defx"
+    # filemanager = "nerdtree"
+    # autocomplete module
+    autocomplete_method = "coc" # require enable lsp module
+    bootstrap_before = "myspacevim#before"
+    bootstrap_after = "myspacevim#after"
+    enable_neomake = false
+        # disable built-in plugin
+    # disabled_plugins = ["neomake.vim"]
+
+# Enable autocomplete layer
+[[layers]]
+    name = 'autocomplete'
+    auto_completion_return_key_behavior = "complete"
+    auto_completion_tab_key_behavior = "cycle"
+    auto_completion_enable_snippets_in_popup = false
+    autocomplete_parens = true
+
+[[layers]]
+    name = "VersionControl"
+    enable = false
+
+[[layers]]
+    name = "checkers"
+    enable = false
+
+[[layers]]
+    name = "core#statusline"
+
+[[layers]]
+    name = "core#banner"
+    enable = false
+    [[layers]]
+    name = "core#tabline"
+
+[[layers]]
+    name = 'core'
+    filetree_show_hidden = true
+
+[[layers]]
+    name = 'shell'
+    default_position = 'top'
+    default_height = 30
+
+[[layers]]
+    name = "lang#c"
+    clang_executable = "g++"
+    clang_flag = ['-I/user/include']
+    enable_clang_syntax_highlight = false
+
+    [layer.clang_std]
+        c = "c11"
+        cpp = "c++1z"
+
+[[layers]]
+  name = 'lsp'
+  filetypes = [
+    'c',
+    'cpp'
+  ]
+  [layers.override_cmd]
+      c = ['ccls', '--log-file=/tmp/ccls.log']
+    cpp = ['ccls', '--log-file=/tmp/ccls.log']
+
+[[layers]]
+    name = "format"
+
+# fuzzy search
+[[layers]]
+  name = "fzf"
+
+[[layers]]
+    name = "cscope"
+    enable = false
+
+[[layers]]
+    name = "gtags"
+    gtagslabel = "pygments"
+    enable = false
+    # 基于lsp的高亮插件
+[[custom_plugins]]
+    name = 'jackguo380/vim-lsp-cxx-highlight'
+
+
+# 主要用于快速搜索 文件, buffer 和 函数
+[[custom_plugins]]
+    name = "Yggdroot/LeaderF"
+    build = "./install.sh"
+```
 6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
@@ -190,8 +316,7 @@ nvim
 这三个键位都是可以重新映射的。
 
 #### search
-[vim-searchindex](https://github.com/google/vim-searchindex) 可以显示当前是第几个文本项:
-![显示拼配项](https://raw.githubusercontent.com/google/vim-searchindex/master/vim-searchindex.gif)
+[vim-searchindex](https://github.com/google/vim-searchindex) 可以显示当前是第几个文本项.
 
 spacevim 配置提供了强大的[异步搜索功能](https://spacevim.org/grep-on-the-fly-in-spacevim/), 比较常用的是:
 
