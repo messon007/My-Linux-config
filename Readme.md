@@ -27,8 +27,8 @@
 - [扩展](#扩展)
     - [基于SpaceVim的扩展 以Latex为例子](#基于spacevim的扩展-以latex为例子)
     - [基于coc.nvim的扩展 以Python为例](#基于cocnvim的扩展-以python为例)
-- [本配置源代码解释](#本配置源代码解释)
-- [其他的一些资源](#其他的一些资源)
+- [配置解释](#本配置解释)
+- [其他资源](#其他资源)
 
 
 <!-- vim-markdown-toc -->
@@ -655,7 +655,7 @@ call coc#config("python.jediEnabled", v:false)
 s:coc_extensions 添加 coc-python 之后，会自动安装[coc-python](https://github.com/neoclide/coc-python)和[language server](https://github.com/microsoft/python-language-server)。
 通过coc.nvim，nvim 可以将自己伪装成为 vscode，coc-python 本身也是 vscode 的插件。如此，vscode 的处理 python 的技术被吸收到 vim 中来。
 
-## [本配置]解释
+## [本配置](https://github.com/messon007/My-Linux-config)解释
 SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码往往是更加好的方法，比如如果想知道 defx 的使用方法，进入到 ~/.SpaceVim/ 中，找到 defx.vim 直接阅读代码即可。
 
 本配置的主要组成:
@@ -664,10 +664,23 @@ SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码�
 3. plugin/coc.vim : coc.nvim 和 ccls 的配置，几乎是[coc.nvim 标准配置](https://github.com/neoclide/coc.nvim#example-vim-configuration) 和 [ccls 提供给coc.nvim 的标准配置](https://github.com/MaskRay/ccls/wiki/coc.nvim) 的复制粘贴。
 4. plugin/defx.vim : 添加了一条让 defx 忽略各种二进制以及其他日常工作中间不关心的文件。
 
-一些快捷键的说明:
-1. `<Space>`  `l`  `p` 预览markdown
 
-## vim 的小技巧
+## 其他资源
+- neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
+- [C/C++ 项目利用 include-what-you-use 来引入头文件](https://github.com/include-what-you-use/include-what-you-use)
+- https://neovim.io/doc/user/vim_diff.html#vim-differences
+- [ubuntu18.04安装vim 8.2](https://www.linuxidc.com/Linux/2020-03/162590.htm)
+
+#### 主题
+1. [dracula](https://draculatheme.com/vim/) 目前感觉最好看的主题之一
+
+#### 框架
+1. [exvim](https://exvim.github.io/)
+2. [spf13-vim](https://github.com/spf13/spf13-vim)
+3. [The Ultimate vimrc](https://github.com/amix/vimrc)
+4. [NVCode](https://github.com/ChristianChiarulli/nvim) 基于 coc.nvim 的一个配置
+
+#### vim 的小技巧
 1. 翻滚屏幕
 ```
 # 保持所在行不动，移动屏幕
@@ -687,18 +700,4 @@ Ctrl + u - 向后滚动半屏，光标在屏幕的位置保持不变
 ```
 setxkbmap -option caps:swapescape
 ```
-
-## 其他的一些资源
-- neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
-- [C/C++ 项目利用 include-what-you-use 来引入头文件](https://github.com/include-what-you-use/include-what-you-use)
-- https://neovim.io/doc/user/vim_diff.html#vim-differences
-- [ubuntu18.04安装vim 8.2](https://www.linuxidc.com/Linux/2020-03/162590.htm)
-
-#### 主题
-1. [dracula](https://draculatheme.com/vim/) 目前感觉最好看的主题之一
-
-#### 框架
-1. [exvim](https://exvim.github.io/)
-2. [spf13-vim](https://github.com/spf13/spf13-vim)
-3. [The Ultimate vimrc](https://github.com/amix/vimrc)
-4. [NVCode](https://github.com/ChristianChiarulli/nvim) 基于 coc.nvim 的一个配置
+5. `<Space>`  `l`  `p` 预览markdown
