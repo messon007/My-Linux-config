@@ -424,12 +424,17 @@ sudo apt install bear
 
 注：使用 bear 生成 compile_commands.json 是一种通用的方法，但是不同的 build 工具和项目还存在一些捷径可走:
 1. linux 内核使用自带的脚本 `scripts/clang-tools/gen_compile_commands.py`，具体可以参考[这里](https://patchwork.kernel.org/patch/10717125/)，这样的话就不用更改一次 .config 就重新编译整个内核。
-2. cmake [生成 compile_commands.json 的方法](https://stackoverflow.com/questions/23960835/cmake-not-generating-compile-commands-json)
+2. cmake 生成 compile_commands.json, 只需在CMakeLists.txt中增加:
+```
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+```
 3. [ninja](https://ninja-build.org/manual.html)
 ```
 ninja -t compdb > compile_commands.json
 ```
 4. [ccls documentation for more](https://github.com/MaskRay/ccls/wiki/Project-Setup)
+
+compile_commands.json需要放到项目root路径。(Provide compile_commands.json at the project root).
 
 ## Work with Linux Kernel
 ```
@@ -449,11 +454,16 @@ nvim
 ## 基本操作
 默认为vim兼容模式，详细的操作请移步到SpaceVim, coc.nvim, ccls 以及特定插件的文档。
 
-注意: vim 默认的 leader 键，加上前面提到的两个特殊功能leader, 一共存在三个 leader 键，其功能总结如下:
-| `,`                         | `c`      | `Space`  |
+注意: vim 默认的 leader 键(默认为\, 重定义为,)，加上windows_leader(默认为s, vim兼容模式下其不可用), space_leader, 一共存在三个 leader 键，其功能总结如下:
+| `,`                         | `s`      | `Space`  |
 |-----------------------------|----------|----------|
-| 通用leader 键，包含各种作用 | 窗口操作 | SpaceVim使用|
+| 通用vim leader 键，有各种作用 | 窗口操作 | SpaceVim使用|
+
 这三个键位都是可以重新映射的。
+以下为 SpaceVim 中与 Vim 默认情况下的一些差异。但是设为vim兼容模式的话(vimcompatible = true )，下列差异都不存在。
+按键 s 是删除光标下的字符，但是在 SpaceVim 中， 它是Normal模式窗口快捷键的前缀，这一功能可以使用选项 windows_leader 来修改，默认是 s。 如果需要使用按键 s 的原生功能，可以将该选项设置为空。
+按键 , 是重复上一次的搜索 f、F、t 和 T ，但在 SpaceVim 中默认被用作为语言专用的前缀键。如果需要禁用此选项， 可设置 enable_language_specific_leader = false。
+
 
 #### search
 [vim-searchindex](https://github.com/google/vim-searchindex) 可以显示当前是第几个文本项.
@@ -466,7 +476,7 @@ spacevim 配置提供了强大的[异步搜索功能](https://spacevim.org/grep-
 | `Space` `s` `p` | 搜索整个工程                              |
 | `Space` `s` `b` | 搜索所有打开的 buffer                     |
 | `Space` `s` `P` | **对于光标所在字符**搜索整个工程          |
-| `Space` `s` `b` | **对于光标所在字符**搜索所有打开的 buffer |
+| `Space` `s` `B` | **对于光标所在字符**搜索所有打开的 buffer |
 
 #### file tree
 参考SpaceVim的[文档](https://spacevim.org/documentation/#file-tree)，我这里总结几个我常用的:
@@ -482,15 +492,12 @@ spacevim 配置提供了强大的[异步搜索功能](https://spacevim.org/grep-
 如果报错, 可能需要执行pip3 install pynvim.
 
 #### window
-1. `<Tab>` : 进入下一个窗口
-2. `c` `g` : 水平拆分窗口。因为 window leader 键位被我重新映射为 `c`，如果是被映射其他键位，比如 `x`, 那么水平拆分为 `x` `g`
-```vim
-    " 重新映射 window leader 键位
-    let g:spacevim_windows_leader = 'c'
-```
-3. `q` : 关闭窗口
-4. `<Space>` `w` `m` 当前窗口最大化
-5. 利用 [vim-smoothie](https://github.com/psliwka/vim-smoothie) 的 `Ctrl` `e` 和 `Ctrl` `y` 可以更加丝滑的翻页  
+窗口管理
+常用的窗口管理快捷键有一个统一的前缀，默认的前缀 [Window] 是按键 s，可以在配置文件中通过修改 SpaceVim 选项 window_leader 的值来设为其它按键：
+[options]
+    windows_leader = "s"
+
+vim兼容模式下需用vim的窗口管理快捷键.
 
 #### buffer
 1. `,` `b` : 搜索 buffer，前面提到过的，这个主要用于打开的 buffer 的数量非常多的情况下。
@@ -536,24 +543,46 @@ cppman -c
 和`查找注释`的功能区别在于，`K`是找到该函数的定义，然后显示函数或者变量"附近"(函数上方或者变量右侧的注释)，而查找文档是从 http://cplusplus.com/ 和 http://cppreference.com/ 中间获取文档。
 
 #### snippet
-基于[UltiSnips](https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt) 可以自己向 UltiSnips/c.snippets，UltiSnips/cpp.snippets 中间添加 C/C++ 的自己定义代码段。 以前刷OJ的时候每次都不知道要加入什么头文件，然后就写了一个自定义 snippet，一键加入所有常用的头文件。
+代码块引擎
+默认的代码块引擎插件使用的是 neosnippet，可以通过 SpaceVim 选项 snippet_engine 来修改为 ultisnips。
 
+[options]
+    snippet_engine = "ultisnips"
+默认情况下，会自动载入以下代码块仓库的代码块模板：
+
+Shougo/neosnippet-snippets：neosnippet 的默认代码块模板
+honza/vim-snippets：额外的代码块模板
+如果 snippet_engine 是 neosnippet，以下文件夹内的代码块模板会被载入：
+
+~/.SpaceVim/snippets/：SpaceVim 内置代码块模板
+~/.SpaceVim.d/snippets/：用户全局代码块模板
+./.SpaceVim.d/snippets/：当前项目本地代码块模板
+你也可以在启动函数内通过变量 g:neosnippet#snippets_directory 添加额外的文件夹， 该变量的值可以是一个 string，指定文件夹路径，也可是一个 list， 其内，每一个元素指定一个文件夹路径。
+
+如果 snippet_engine 是 ultisnips，以下文件夹内的代码块模板会被载入：
+
+~/.SpaceVim/UltiSnips/：SpaceVim 内置代码块模板
+~/.SpaceVim.d/UltiSnips/：用户全局代码块模板
+./.SpaceVim.d/UltiSnips/：当前项目本地代码块模板
+默认情况下，代码块模板缩写词会在补全列表里面显示，以提示当前输入的内容为一个代码块模板的缩写， 如果需要禁用这一特性，可以设置 auto_completion_enable_snippets_in_popup 为 false。
+
+[[layers]]
+  name = "autocomplete"
+  auto_completion_enable_snippets_in_popup = false
+
+可以自己向 c.snippets，cpp.snippets 中间添加 C/C++ 的自己定义代码段。 
 ```snippets
-snippet import
+snippet header
 #include <iostream>
 // 省略部分头文件，具体内容在下方的截图中间
 #include <unordered_map>
 
 using namespace std;
 
-int main(){
-	${0}
-	return 0;
-}
 endsnippet
 ```
 
-这样，然后每次只需要输入 import 这些内容就自动出现了，效果如下。
+这样，然后每次只需要输入 header 这些内容就自动出现了，效果如下。
 ![此时只需要按下Enter，这些内容就会自动出现](https://upload-images.jianshu.io/upload_images/9176874-50be9343756e731f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 一般的自动补全, coc.nvim 无需另外的配置，效果如下。
@@ -570,8 +599,22 @@ SpaceVim 的[git layer](https://spacevim.org/layers/git/) 对于 git 的支持�
     call SpaceVim#custom#SPC('nnoremap', ['g', 'l'], 'FloatermNew lazygit', 'open lazygit in floaterm', 1)
 ```
 
+#### shell
+SpaceVim 支持两种 shell，用户在启用该模块时，可以通过 default_shell 这一模块选项来指定默认的 shell 工具。
+terminal：使用 Vim/Neovim 内置终端
+VimShell：使用 VimShell 这一插件
+The default shell is quickly accessible via a the default shortcut key SPC '.
+SPC '	打开或跳至已打开的终端窗口
+Ctrl-d	输入模式下关闭终端窗口
+q	Normal 模式下隐藏终端窗口
+<Esc>	从 Terminal 模式切换到 Normal 模式
+Ctrl-Left	切换到左侧窗口
+Ctrl-Up	切换到上方窗口
+Ctrl-Down	切换到下方窗口
+Ctrl-Right	切换到右侧窗口
+
 #### format
-`Space`  `r`  `f` 格式化当前文件，支持C/C++ , Rust 和 Python 等。
+:Format格式化当前文件，支持C/C++ , Rust 和 Python 等。
 
 可以通过一个工程的目录下的 `.clang-format` 来实现配置 C/C++ 的格式样式:
 1. https://github.com/MaskRay/ccls/blob/master/.clang-format : 将代码格式为 LLVM 风格
@@ -581,7 +624,7 @@ SpaceVim 的[git layer](https://spacevim.org/layers/git/) 对于 git 的支持�
 https://zhuanlan.zhihu.com/p/137840336 : 配置代码风格为 Google 风格
 
 #### refactor之rename
-有时候，写了一个函数名，然后多次调用，最后发现函数名的单词写错了，一个个的修改非常的让人窒息。使用 `,` `r` `n` 在需要重命名的元素上，即可批量重命名。
+使用SP + l + e可实现rename.
 
 #### debug
 关于vim如何集成gdb，现在存在非常多的插件，我没有仔细研究。我个人平时使用下面两个项目辅助 gdb 的使用:
@@ -599,7 +642,6 @@ https://zhuanlan.zhihu.com/p/137840336 : 配置代码风格为 Google 风格
 
 下面是在打开悬浮终端，并且运行 htop 的结果:
 ![floaterm](https://upload-images.jianshu.io/upload_images/9176874-32e6bbbc08cb4b8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 
 ## 扩展
@@ -700,4 +742,3 @@ Ctrl + u - 向后滚动半屏，光标在屏幕的位置保持不变
 ```
 setxkbmap -option caps:swapescape
 ```
-5. `<Space>`  `l`  `p` 预览markdown
