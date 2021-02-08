@@ -281,6 +281,10 @@ init.toml
     gtagslabel = "pygments"
     enable = false
 
+[[layers]]
+    name = "ui"
+    enable = false
+    
 # 基于lsp的高亮插件
 [[custom_plugins]]
     name = 'jackguo380/vim-lsp-cxx-highlight'
@@ -589,6 +593,8 @@ endsnippet
 
 一般的自动补全, coc.nvim 无需另外的配置，效果如下。
 ![自动补全](https://upload-images.jianshu.io/upload_images/9176874-daac0f5b05792dba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+实际测试该配置还不能用。
 
 #### git
 SpaceVim 的[git layer](https://spacevim.org/layers/git/) 对于 git 的支持非常好，其相关的快捷键都是 `<Space>` `g` 开头的，非常好用。
