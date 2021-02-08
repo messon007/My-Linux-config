@@ -537,6 +537,8 @@ vim兼容模式下需用vim的窗口管理快捷键.
 pip install cppman
 cppman -c
 ```
+使能该快捷键需要使用如下配置:
+autocmd FileType c,cpp noremap <C-]> <Esc>:execute "Cppman " . expand("<cword>")<CR>
 
 ![查找`get_id`文档](https://upload-images.jianshu.io/upload_images/9176874-640596fe5a653d60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
