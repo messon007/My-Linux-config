@@ -7,7 +7,7 @@
 
 - [前言](#前言)
 - [关于lsp和async](#关于-language-server-protocol-和-async-)
-- [关于 Language Server Protocol 和 async 的时代](#关于-language-server-protocal-和-async-的时代)
+- [关于 Language Server Protocol 和 async 的时代](#关于-language-server-protocol-和-async-的时代)
 - [安装](#install)
 - [用于Linux Kernel](#work-with-linux-kernel)
 - [基本操作](#基本操作)
