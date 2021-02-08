@@ -6,8 +6,8 @@
 <!-- vim-markdown-toc GitLab -->
 
 - [前言](#前言)
-- [关于lsp和async](#关于-language-server-protocol-和-async-)
-- [关于 Language Server Protocol 和 async 的时代](#关于-language-server-protocol-和-async-的时代)
+- [关于lsp和async](#关于-language-server-protocol-和-async)
+- [关于 Language Server Protocol 和 async 的时代](#关于-language-server-protocol-和-async)
 - [安装](#install)
 - [用于Linux Kernel](#work-with-linux-kernel)
 - [基本操作](#基本操作)
@@ -43,7 +43,7 @@
 
 本文使用neovim + [SpaceVim](http://spacevim.org/) + [coc.nim](https://github.com/neoclide/coc.nvim)来搭建c/c++开发环境。SpaceVim的默认提供各种基础设施的解决方案，比如status line，搜索，markdown预览高亮，其也虽然提供了 [C/C++ 的配置](https://spacevim.org/layers/lang/c/)，但是我个人觉得并不好用，而coc.nvim吸收了VSCode的优点(允许安装VSCode插件的coc插件版本)。
 
-## 关于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 和 async 的时代
+## 关于 [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) 和 async
 ### lsp是什么
 lsp 定义了一套标准编辑器和 language server 之间的规范。不同的语言需要不同的Language Server，比如C/C++ 需要 [ccls](https://github.com/MaskRay/ccls), Rust语言采用[rls](https://github.com/rust-lang/rls)，Language server 的清单在[这里](https://microsoft.github.io/language-server-protocol/implementors/servers/)。在lsp的另一端，也就是编辑器这一端，也需要对应的实现，其列表在[这里](https://microsoft.github.io/language-server-protocol/implementors/tools/)。也就是说，由于lsp的存在，一门语言的language server可以用于所有的支持lsp的编辑器上，大大的减少了重复开发。其架构图大概如下，另外 neovim 逐步会将lsp内置到编辑器中间，所以 Editor Plugin 层将来就不需要了。
 ```
