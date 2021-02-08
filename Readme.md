@@ -1,4 +1,4 @@
-# neovim的C/C++配置
+# neovim及spacevim的C/C++配置
 
 
 <details open="">
