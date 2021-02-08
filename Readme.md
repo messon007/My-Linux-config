@@ -8,7 +8,7 @@
 - [前言](#前言)
 - [关于 lsp 和 async ](#----language-server-protocol--https---microsoftgithubio-language-server-protocol-----async)
 - [安装](#install)
-- [Work with Linux Kernel](#Work with Linux Kernel)
+- [用于Linux Kernel](#work-with-linux-kernel)
 - [基本操作](#基本操作)
     - [search](#search)
     - [file tree](#file-tree)
