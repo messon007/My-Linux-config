@@ -79,7 +79,7 @@ lsp 定义了一套标准编辑器和 language server 之间的规范。不同�
 ![内核的gitignore](https://upload-images.jianshu.io/upload_images/9176874-8d57913135875846.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 关于Neovim
-Neovim is a Vim-based text editor engineered for extensibility and usability. 
+Neovim is a Vim-based text editor engineered for sibility and usability. 
 Neovim is a refactor, and sometimes redactor, in the tradition of Vim (which itself derives from Stevie). It is not a rewrite but a continuation and extension of Vim. Many clones and derivatives exist, some very clever—but none are Vim. Neovim is built for users who want the good parts of Vim, and more.
 其配置文件为.config/nvim
 
@@ -94,7 +94,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 +-----------------+
 |                 |
 |     my config   | 定制Neovim, SpaceVim和coc.nvim的配置，添加coc.nvim的插件; init.toml, plugin/coc.vim, plugin/defx.vim和autoload/myspacevim.vim
-|                 |
+|                 | custom的插件放在~/.cache/vimfiles目录.
 +-----------------+
 |                 |
 |     Coc.nvim    | 作为SpaceVim的插件，在SpaceVim的autocomplet_method为coc时会要求启用lsp层，此时coc作为language-server的前端。
@@ -713,6 +713,7 @@ SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码�
 2. autoload/myspacevim.vim : 一些插件的配置和快捷键, 支持vim script. 实现在init.toml中定义的bootstrap_before和bootstrap_after函数。
 3. plugin/coc.vim : coc.nvim 和 ccls 的配置，几乎是[coc.nvim 标准配置](https://github.com/neoclide/coc.nvim#example-vim-configuration) 和 [ccls 提供给coc.nvim 的标准配置](https://github.com/MaskRay/ccls/wiki/coc.nvim) 的复制粘贴。
 4. plugin/defx.vim : 添加了一条让 defx 忽略各种二进制以及其他日常工作中间不关心的文件。
+5. 下载的插件缓存在~/.cache/vimfiles中.
 
 
 ## 其他资源
