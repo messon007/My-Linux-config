@@ -168,7 +168,8 @@ init.toml
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
     # layer
-    colorscheme = "gruvbox"
+    # colorscheme = "gruvbox"
+    colorscheme = "dracula"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
@@ -186,7 +187,10 @@ init.toml
     # left sections of statusline
     statusline_left_sections = [
         'winnr',
-	    ]
+#        'major mode',
+#        'filename',
+#        'fileformat'
+    ]
     # right sections of statusline
     statusline_right_sections = [
        'percentage'
@@ -206,16 +210,17 @@ init.toml
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
     enable_neomake = false
-    
+
     # disable built-in plugin
     # disabled_plugins = ["neomake.vim"]
+    enable_vimfiler_welcome = false
 
 # Enable autocomplete layer
 [[layers]]
     name = 'autocomplete'
     auto_completion_return_key_behavior = "complete"
     auto_completion_tab_key_behavior = "cycle"
-    auto_completion_enable_snippets_in_popup = false
+    auto_completion_enable_snippets_in_popup = true
     autocomplete_parens = true
 
 [[layers]]
@@ -232,7 +237,7 @@ init.toml
 [[layers]]
     name = "core#banner"
     enable = false
-   
+
 [[layers]]
     name = "core#tabline"
 
@@ -262,15 +267,25 @@ init.toml
     'cpp'
   ]
   [layers.override_cmd]
-      c = ['ccls', '--log-file=/tmp/ccls.log']
-      cpp = ['ccls', '--log-file=/tmp/ccls.log']
+    c = ['ccls', '--log-file=/tmp/ccls.log']
+    cpp = ['ccls', '--log-file=/tmp/ccls.log']
 
 [[layers]]
     name = "format"
 
+[[layers]]
+    name = "edit"
+    enable = false
+
+# fuzzy search
+[[layers]]
+  name = "denite"
+  enable = false
+
 # fuzzy search
 [[layers]]
   name = "fzf"
+  enable = false
 
 [[layers]]
     name = "cscope"
@@ -284,15 +299,28 @@ init.toml
 [[layers]]
     name = "ui"
     enable = false
-    
+
 # 基于lsp的高亮插件
-[[custom_plugins]]
-    name = 'jackguo380/vim-lsp-cxx-highlight'
+#[[custom_plugins]]
+#    name = 'jackguo380/vim-lsp-cxx-highlight'
 
 # 主要用于快速搜索 文件, buffer 和 函数
 [[custom_plugins]]
     name = "Yggdroot/LeaderF"
     build = "./install.sh"
+
+# 参考https://vimjc.com/vim-indentLine-plugin.html
+[[custom_plugins]]
+    name = 'Yggdroot/indentLine'
+
+# 从 http://cplusplus.com/ 和 http://cppreference.com/ 获取文档
+[[custom_plugins]]
+    name = 'skywind3000/vim-cppman'
+
+[[custom_plugins]]
+    repo = "dracula/vim"
+    name = "dracula"
+    merged = false
 ```
 Here is my configuration in SpaceVim.d/autoload/myspacevim.vim
 ```
@@ -714,6 +742,7 @@ SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码�
 3. plugin/coc.vim : coc.nvim 和 ccls 的配置，几乎是[coc.nvim 标准配置](https://github.com/neoclide/coc.nvim#example-vim-configuration) 和 [ccls 提供给coc.nvim 的标准配置](https://github.com/MaskRay/ccls/wiki/coc.nvim) 的复制粘贴。
 4. plugin/defx.vim : 添加了一条让 defx 忽略各种二进制以及其他日常工作中间不关心的文件。
 5. 下载的插件缓存在~/.cache/vimfiles中.
+6. SpaceVim默认设置在~/.SpaceVim/autoload/SpaceVim/default.vim. 启动会先先执行里面的设置, 再执行custom.vim即.SpaceVim.d/init.toml中的定制.
 
 
 ## 其他资源
