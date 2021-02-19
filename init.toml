@@ -10,7 +10,8 @@
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
     # layer
-    colorscheme = "gruvbox"
+    # colorscheme = "gruvbox"
+    colorscheme = "dracula"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
@@ -54,13 +55,14 @@
 
     # disable built-in plugin
     # disabled_plugins = ["neomake.vim"]
+    enable_vimfiler_welcome = false
 
 # Enable autocomplete layer
 [[layers]]
     name = 'autocomplete'
     auto_completion_return_key_behavior = "complete"
     auto_completion_tab_key_behavior = "cycle"
-    auto_completion_enable_snippets_in_popup = false
+    auto_completion_enable_snippets_in_popup = true
     autocomplete_parens = true
 
 [[layers]]
@@ -113,9 +115,19 @@
 [[layers]]
     name = "format"
 
+[[layers]]
+    name = "edit"
+    enable = false
+
+# fuzzy search
+[[layers]]
+  name = "denite"
+  enable = false
+
 # fuzzy search
 [[layers]]
   name = "fzf"
+  enable = false
 
 [[layers]]
     name = "cscope"
@@ -126,16 +138,28 @@
     gtagslabel = "pygments"
     enable = false
 
+[[layers]]
+    name = "ui"
+    enable = false
 
 # 基于lsp的高亮插件
-[[custom_plugins]]
-    name = 'jackguo380/vim-lsp-cxx-highlight'
+#[[custom_plugins]]
+#    name = 'jackguo380/vim-lsp-cxx-highlight'
 
 # 主要用于快速搜索 文件, buffer 和 函数
 [[custom_plugins]]
     name = "Yggdroot/LeaderF"
     build = "./install.sh"
 
+# 参考https://vimjc.com/vim-indentLine-plugin.html
+[[custom_plugins]]
+    name = 'Yggdroot/indentLine'
+
 # 从 http://cplusplus.com/ 和 http://cppreference.com/ 获取文档
 [[custom_plugins]]
     name = 'skywind3000/vim-cppman'
+
+[[custom_plugins]]
+    repo = "dracula/vim"
+    name = "dracula"
+    merged = false
