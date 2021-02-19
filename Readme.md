@@ -1,4 +1,4 @@
-# neovim及spacevim的C/C++配置
+# neovim及spacevim的C/C++配置 (适用于wsl2)
 
 
 <details open="">
@@ -446,8 +446,16 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 ```
 
-6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。
+6. 启动nvim, 其会自动安装所需的插件。然后在nvim中执行 `checkhealth` 命令，其会提醒需要安装的各种依赖。比如 xclip 没有安装，那么和系统的clipboard和vim的clipboard之间复制会出现问题。neovim 的 python 的没有安装可能导致直接不可用。
 安装的插件目录应该在.cache/vimfiles/repos/github.com/底下. 
+```
+sudo apt install xclip
+# archlinux 请使用 wl-clipboard 替代xclip
+# sudo pacman -S wl-clipboard
+sudo pip3 install neovim
+```
+wsl2 linux下还需要安装x server(xming或vcxsrv), 参考https://github.com/Microsoft/WSL/issues/1069 或 https://gist.github.com/necojackarc/02c3c81e1525bb5dc3561f378e921541
+通过"+y 和 "+p来进行复制和粘贴.
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
 ```
