@@ -455,7 +455,8 @@ sudo apt install xclip
 sudo pip3 install neovim
 ```
 wsl2 linux下还需要安装x server(xming或vcxsrv), 参考https://github.com/Microsoft/WSL/issues/1069 或 https://gist.github.com/necojackarc/02c3c81e1525bb5dc3561f378e921541
-通过"+y 和 "+p来进行复制和粘贴.
+通过"+y 和 "+p来进行复制和粘贴. 
+当windows有多个IP时, 注意xming监听的127.0.0.1对应哪个ip.
 
 7. 安装[bear](https://github.com/rizsotto/Bear)。ccls 需要通过 bear 生成的 compile_commands.json 来构建索引数据。
 ```
