@@ -172,6 +172,14 @@ https://nodejs.org/en/download/
 ccls version 0.20190823.6-1~ubuntu1.20.04.1
 clang version 10.0.0-4ubuntu1
 ```
+Ubuntu 18.04 prebuilt binaries are actually suitable for many non-Ubuntu distributions. You may replace the last two cmake commands with:
+```
+wget -c http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+tar xf clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04
+cmake --build Release
+```
+
 5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.注意coc.nvim对nodej有版本要求, 需参考coc.nvim的github页来确认。
 ```sh
 cd ~ # 保证在根目录
