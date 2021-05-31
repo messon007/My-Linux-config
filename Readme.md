@@ -191,6 +191,7 @@ Download "Pre-Built Binaries" from https://releases.llvm.org/download.html
  See https://github.com/MaskRay/ccls/wiki/FAQ#verify-the-clang-resource-directory-is-correct
 
 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/clang+llvm-xxx
+
 cmake --build Release
 
 
