@@ -134,6 +134,19 @@ Run :checkhealth for more info
 ```
 npm -g install neovim
 ```
+
+在Ubuntu上安装最新版本的Neovim:
+```
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+./nvim.appimage --appimage-extract
+./squashfs-root/AppRun --version
+
+# Optional: exposing nvim globally
+mv squashfs-root / && ln -s /squashfs-root/AppRun /usr/bin/nvim
+nvim --version
+```
+
 2. 按照Spacevim 安装的[官方文档](https://spacevim.org/cn/quick-start-guide/)安装SpaceVim。只为neovim安装Spacevim用:
 ```
 curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
