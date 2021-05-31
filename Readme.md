@@ -160,6 +160,11 @@ https://registry.npm.taobao.org/
 
 如果遇到yarn配置报错, 需卸载cmdtest和yarn后通过npm重新安装yarn. sudo npm install -g yarn. 然后重启终端。
 ```
+
+**安装最新版本的npm和nodejs方法**:
+https://github.com/nodejs/help/wiki/Installation
+https://nodejs.org/en/download/
+
 4. 安装ccls。也可以参考其[官方文档](https://github.com/MaskRay/ccls/wiki/Build)手动编译获取最新版。
 ```
 ➜  Vn git:(master) ✗ sudo apt install ccls
