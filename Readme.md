@@ -171,7 +171,7 @@ clang version 10.0.0-4ubuntu1
 ```sh
 cd ~ # 保证在根目录
 rm -r .SpaceVim.d # 将原来的配置删除
-git clone https://github.com/martins3/My-Linux-config .SpaceVim.d 
+git clone https://github.com/messon007/My-Linux-config .SpaceVim.d 
 nvim # 打开vim 将会自动安装所有的插件
 ```
 init.toml
