@@ -202,6 +202,9 @@ tar xf clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04
 cmake --build Release
 ```
+
+Ignore fatal: No names found, cannot describe anything message Proceed with cmake --build Release and, if successful, cd Release && sudo make install
+
 The resulting executable will be Release/ccls. If you forgot to pass --recursive when cloning the repo, git submodule update --init to clone the rapidjson repository.
 
 If you compile ccls with GCC 8.2.1, append -DCMAKE_CXX_FLAGS=-fno-gnu-unique. See https://github.com/MaskRay/ccls/issues/363#issuecomment-482625854 for details.
