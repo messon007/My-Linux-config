@@ -206,6 +206,11 @@ The resulting executable will be Release/ccls. If you forgot to pass --recursive
 
 If you compile ccls with GCC 8.2.1, append -DCMAKE_CXX_FLAGS=-fno-gnu-unique. See https://github.com/MaskRay/ccls/issues/363#issuecomment-482625854 for details.
 
+ld时缺库的话，可能需要执行如下命令来安装:
+```
+sudo apt-get install libz-dev  (改名叫lib1g-dev)
+sudo apt-get install libtinfo-dev
+```
 
 5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.注意coc.nvim对nodej有版本要求, 需参考coc.nvim的github页来确认。
 ```sh
