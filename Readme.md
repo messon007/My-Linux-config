@@ -189,11 +189,6 @@ clang version 10.0.0-4ubuntu1
 
 The simplest/quickest build with all defaults (only for POSIX systems) is:
 
-```
-
-
-```
-
 Download "Pre-Built Binaries" from https://releases.llvm.org/download.html
  and unpack to /path/to/clang+llvm-xxx.
  Do not unpack to a temporary directory, as the clang resource directory is hard-coded
