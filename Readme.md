@@ -162,10 +162,19 @@ https://registry.npm.taobao.org/
 ```
 
 **安装最新版本的npm和nodejs方法**:
+```
+curl -LO https://nodejs.org/download/release/v15.14.0/node-v15.14.0-linux-x64.tar.gz
+tar xvf node-v15.14.0-linux-x64.tar.gz
+cd node-v15.14.0-linux-x64/bin
+echo "export PATH=`pwd`:$PATH" >> ~/.profile
+node -v
+npm version
+npm install -g npm@7.20.0
+```
 
 https://github.com/nodejs/help/wiki/Installation
-
 https://nodejs.org/en/download/
+
 
 4. 安装ccls。也可以参考其[官方文档](https://github.com/MaskRay/ccls/wiki/Build)手动编译获取最新版。
 ```
