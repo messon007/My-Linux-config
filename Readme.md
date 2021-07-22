@@ -189,19 +189,24 @@ clang version 10.0.0-4ubuntu1
 
 The simplest/quickest build with all defaults (only for POSIX systems) is:
 
-git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+```
+curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
+tar xvf clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
 
+git clone --depth=1 --recursive https://github.com/MaskRay/ccls
 cd ccls
+
+```
 
 Download "Pre-Built Binaries" from https://releases.llvm.org/download.html
  and unpack to /path/to/clang+llvm-xxx.
  Do not unpack to a temporary directory, as the clang resource directory is hard-coded
  into ccls at compile time!
  See https://github.com/MaskRay/ccls/wiki/FAQ#verify-the-clang-resource-directory-is-correct
-
+```
 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/clang+llvm-xxx
-
 cmake --build Release
+```
 
 
 Ubuntu 18.04 prebuilt binaries are actually suitable for many non-Ubuntu distributions. You may replace the last two cmake commands with:
