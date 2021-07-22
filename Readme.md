@@ -190,11 +190,7 @@ clang version 10.0.0-4ubuntu1
 The simplest/quickest build with all defaults (only for POSIX systems) is:
 
 ```
-curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
-tar xvf clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
 
-git clone --depth=1 --recursive https://github.com/MaskRay/ccls
-cd ccls
 
 ```
 
@@ -204,8 +200,16 @@ Download "Pre-Built Binaries" from https://releases.llvm.org/download.html
  into ccls at compile time!
  See https://github.com/MaskRay/ccls/wiki/FAQ#verify-the-clang-resource-directory-is-correct
 ```
-cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/clang+llvm-xxx
+curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
+tar xvf clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
+
+git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+cd ccls
+
+cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=./../clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04
 cmake --build Release
+
+sudo cmake --install Release/ --prefix /usr/local/
 ```
 
 
@@ -215,6 +219,7 @@ wget -c http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-
 tar xf clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04
 cmake --build Release
+
 ```
 
 Ignore fatal: No names found, cannot describe anything message Proceed with cmake --build Release and, if successful, cd Release && sudo make install
