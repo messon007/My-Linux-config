@@ -9,8 +9,8 @@ set hidden
 set nobackup
 set nowritebackup
 
-" 使用 Microsoft Python Language Server 不然 coc.nvim 会警告
-call coc#config("python.jediEnabled", v:false)
+" 使用 Microsoft Python Language Server 不然 coc.nvim 会警告. coc-python require it. but now use coc-pyright
+" call coc#config("python.jediEnabled", v:false)
 
 call coc#config('coc.preferences', {
                         \ "autoTrigger": "always",
@@ -46,9 +46,9 @@ call coc#config("languageserver", {
       \},
       \})
 
-" coc.nvim 插件，用于支持 python  等语言
+" coc.nvim 插件，用于支持 python  等语言. use coc-pyright to replace coc-python
 let s:coc_extensions = [
-      \ 'coc-python',
+      \ 'coc-pyright',
       \ 'coc-dictionary',
       \ 'coc-tag',
       \ 'coc-json',
