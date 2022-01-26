@@ -170,6 +170,7 @@ echo "export PATH=`pwd`:$PATH" >> ~/.profile
 node -v
 npm version
 npm install -g npm@7.20.0
+npm -g install neovim
 ```
 
 https://github.com/nodejs/help/wiki/Installation
