@@ -135,7 +135,7 @@ Run :checkhealth for more info
 npm -g install neovim
 ```
 
-在Ubuntu上安装最新版本的Neovim:
+在Ubuntu上安装最新版本的Neovim (nvim大于5.0的版本可能需要额外的配置，如可能内置了lsp等，暂未进行完整验证):
 ```
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
