@@ -230,6 +230,24 @@ sudo apt-get install libz-dev  (改名叫lib1g-dev)
 sudo apt-get install libtinfo-dev
 ```
 
+如果不重新编译的话，可能ccls会找不到一些头文件如stddef.h, 原因按作者如下：
+```
+Clang resource directory
+Some header files such as stddef.h stdint.h are located in the include/ subdirectory of Clang resource directory. The path is derived from clang -print-resource-dir at CMake configure time.
+
+The location is hard-coded in the ccls executable (-DCLANG_RESOURCE_DIR= when building ccls). If you want to install ccls and delete the build directory, you need to copy the contents of the resource directory before building ccls.
+
+Otherwise the absence of Clang resource directory may lead to errors like unknown type name 'size_t'.
+
+sudo mkdir -p /usr/local/clang/7.0.0
+sudo cp -a Release/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/lib/clang/7.0.0/include /usr/local/clang/7.0.0/
+Then you must set the initialization option clang.resourceDir: --init='{"clang": {"resourceDir": "/usr/local/clang/7.0.0"}}'.
+
+note: It's likely you will encounter this issue whenever you update clang without rebuilding ccls.
+
+Detai参考: https://github-wiki-see.page/m/MaskRay/ccls/wiki/Install#clang-resource-directory
+```
+
 5. 下载本配置(目录.SpaceVim.d), 在此基础上定制自己的配置。会使能coc和lsp.注意coc.nvim对nodej有版本要求, 需参考coc.nvim的github页来确认。
 ```sh
 cd ~ # 保证在根目录
