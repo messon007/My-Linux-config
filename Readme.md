@@ -576,9 +576,13 @@ compile_commands.json需要放到项目root路径。(Provide compile_commands.js
 git clone https://mirrors.tuna.tsinghua.edu.cn/git/linux.git
 cd linux
 # 使用标准配置，参考 :  https://www.linuxtopia.org/online_books/linux_kernel/kernel_configuration/ch11s03.html
-make defconfig
+make ARCH=arm64 defconfig
 # 编译内核
-make -j8
+make ARCH=arm64 CROSS_COMPILE=aarch64-fsl-linux-- -j8
+# 若报错，则:
+sudo apt install libssl-dev
+sudo apt install libelf-dev
+
 # 在 xxx 之后的内核中间, 利用生成 compile_commands.json
 scripts/clang-tools/gen_compile_commands.py
 # 第一次打开的时候，ccls 会生成索引文件，此时风扇飞转属于正常现象，之后不会出现这种问题
