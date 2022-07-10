@@ -415,6 +415,10 @@ init.toml
     repo = "dracula/vim"
     name = "dracula"
     merged = false
+    
+[[custom_plugins]]
+    name = 'voldikss/vim-translator'
+    
 ```
 Here is my configuration in SpaceVim.d/autoload/myspacevim.vim
 ```
