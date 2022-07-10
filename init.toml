@@ -163,3 +163,7 @@
     repo = "dracula/vim"
     name = "dracula"
     merged = false
+
+[[custom_plugins]]
+    name = 'voldikss/vim-translator'
+
