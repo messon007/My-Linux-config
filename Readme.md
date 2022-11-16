@@ -845,16 +845,23 @@ s:coc_extensions 添加 coc-python 之后，会自动安装[coc-python](https://
 通过coc.nvim，nvim 可以将自己伪装成为 vscode，coc-python 本身也是 vscode 的插件。如此，vscode 的处理 python 的技术被吸收到 vim 中来。
 
 ## [本配置](https://github.com/messon007/My-Linux-config)解释
-SpaceVim 的文档往往是过时的或者是不详细的，直接阅读代码往往是更加好的方法，比如如果想知道 defx 的使用方法，进入到 ~/.SpaceVim/ 中，找到 defx.vim 直接阅读代码即可。
+阅读SpaceVim里plugin代码如defx: 进入 ~/.SpaceVim/ 中，找到 defx.vim 直接阅读代码即可。
 
 本配置的主要组成:
-1. init.toml : 最基本的配置，在此处可以自己添加新的插件, SpaceVim加载后会加载此配置。不支持vim script.
+0. nvim会加载~/.config/nvim/目录下的init.vim。SpaceVim定制了init.vim. SpaceVim会加载~/.SpaceVim.d/
+1. init.toml: SpaceVim最基本的配置，在此处可以自己添加新的插件, SpaceVim加载后会加载此配置。不支持vim script.
 2. autoload/myspacevim.vim : 一些插件的配置和快捷键, 支持vim script. 实现在init.toml中定义的bootstrap_before和bootstrap_after函数。
 3. plugin/coc.vim : coc.nvim 和 ccls 的配置，几乎是[coc.nvim 标准配置](https://github.com/neoclide/coc.nvim#example-vim-configuration) 和 [ccls 提供给coc.nvim 的标准配置](https://github.com/MaskRay/ccls/wiki/coc.nvim) 的复制粘贴。
 4. plugin/defx.vim : 添加了一条让 defx 忽略各种二进制以及其他日常工作中间不关心的文件。
 5. 下载的插件缓存在~/.cache/vimfiles中.
 6. SpaceVim默认设置在~/.SpaceVim/autoload/SpaceVim/default.vim. 启动会先先执行里面的设置, 再执行custom.vim即.SpaceVim.d/init.toml中的定制.
+7. coc.nvim是conquer of completion, 期望给neovim/vim提供vscode类似体验, 有丰富的生态体系，也是一个框架。默认不带语言服务器，支持各种语言服务器插件。
 
+## 实现语言
+neovim: C, vimscript(vimL), lua
+SpaceVim: viml (插件管理器，有了coc, SpaceVim用处不大, 可移除)
+coc.nvim: viml + nodejs(通过rpc和viml进行通信. coc/rpc.vim中的start_server->job_command->node进程)
+coc-pyright: coc的python语言服务器
 
 ## 其他资源
 - neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
