@@ -858,10 +858,10 @@ s:coc_extensions 添加 coc-python 之后，会自动安装[coc-python](https://
 7. coc.nvim是conquer of completion, 期望给neovim/vim提供vscode类似体验, 有丰富的生态体系，也是一个框架。默认不带语言服务器，支持各种语言服务器插件。
 
 ## 实现语言
-neovim: C, vimscript(vimL), lua
-SpaceVim: viml (插件管理器，有了coc, SpaceVim用处不大, 可移除)
-coc.nvim: viml + nodejs(通过rpc和viml进行通信. coc/rpc.vim中的start_server->job_command->node进程)
-coc-pyright: coc的python语言服务器
+- neovim: C, vimscript(vimL), lua
+- SpaceVim: viml (插件管理器，有了coc, SpaceVim用处不大, 可移除)
+- coc.nvim: viml + nodejs(通过rpc和viml进行通信. coc/rpc.vim中的start_server->job_command->node进程)
+- coc-pyright: coc的python语言服务器. 从vscode版的pyright演化而来.
 
 ## 其他资源
 - neovim build-in lsp 最近愈发的完善，[这个项目](https://github.com/glepnir/lspsaga.nvim)为 build-in lps 提供更加美观的 UI.
