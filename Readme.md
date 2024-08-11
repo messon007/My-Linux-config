@@ -152,11 +152,10 @@ nvim --version
 curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
 ```
 
-3. 安装npm和yarn, **保证yarn/npm使用国内镜像, 部分插件需要使用yarn/npm安装, 如果不切换为国内镜像, ***很容易***出现安装失败.**，切换方法参考[这里](https://zhuanlan.zhihu.com/p/35856841). 安装完成之后检查:
+3. 安装npm和yarn, **保证yarn/npm使用国内镜像, 部分插件需要使用yarn/npm安装, 如果不切换为国内镜像, ***很容易***出现安装失败.**，切换方法可搜索. 安装完成之后检查:
 ```
 ➜  Vn git:(master) ✗ yarn config get registry && npm config get registry
-https://registry.npm.taobao.org
-https://registry.npm.taobao.org/
+npm config set registry https://registry.npmmirror.com
 
 如果遇到yarn配置报错, 需卸载cmdtest和yarn后通过npm重新安装yarn. sudo npm install -g yarn. 然后重启终端。
 ```
